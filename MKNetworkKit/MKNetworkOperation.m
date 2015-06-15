@@ -890,6 +890,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
 -(void) endBackgroundTask {
   
 #if TARGET_OS_IPHONE
+#if !TARGET_IS_EXTENSION
   dispatch_async(dispatch_get_main_queue(), ^{
     if (self.backgroundTaskId != UIBackgroundTaskInvalid) {
       [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskId];
@@ -897,12 +898,14 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     }
   });
 #endif
+#endif
 }
 
 - (void) start
 {
   
 #if TARGET_OS_IPHONE
+#if !TARGET_IS_EXTENSION
   self.backgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -915,6 +918,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
     });
   }];
   
+#endif
 #endif
   
   if(!self.isCancelled) {
@@ -1482,6 +1486,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
 -(void) showLocalNotification {
 #if TARGET_OS_IPHONE
+#if !TARGET_IS_EXTENSION
   
   if(self.localNotification) {
     
@@ -1496,6 +1501,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
   }
 #endif
+#endif
 }
 
 -(void) operationFailedWithError:(NSError*) error {
@@ -1509,8 +1515,10 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     errorBlock(self, error);
   
 #if TARGET_OS_IPHONE
+#if !TARGET_IS_EXTENSION
   if([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground)
     [self showLocalNotification];
+#endif
 #endif
   
 }
