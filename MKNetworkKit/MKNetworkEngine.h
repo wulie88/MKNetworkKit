@@ -413,6 +413,10 @@
  */
 -(BOOL) isReachable;
 
+-(BOOL) isViaWifi;
+
+-(BOOL) isViaWWAN;
+
 /*!
  *  @abstract Boolean variable that states whether the request should automatically include an Accept-Language header.
  *  @property shouldSendAcceptLanguageHeader

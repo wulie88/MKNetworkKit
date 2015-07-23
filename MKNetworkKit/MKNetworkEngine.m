@@ -323,6 +323,16 @@ static NSOperationQueue *_sharedNetworkQueue;
   return ([self.reachability currentReachabilityStatus] != NotReachable);
 }
 
+- (BOOL) isViaWifi {
+    
+    return ([self.reachability currentReachabilityStatus] == ReachableViaWiFi);
+}
+
+- (BOOL) isViaWWAN {
+    
+    return ([self.reachability currentReachabilityStatus] == ReachableViaWWAN);
+}
+
 #pragma mark -
 #pragma mark Create methods
 
